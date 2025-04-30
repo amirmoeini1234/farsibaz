@@ -1,0 +1,266 @@
+body {
+    margin: 0;
+    /* min-height: 200vh; */ /* Removed, handled below */
+    /* position: relative; */ /* Removed, handled below */
+    padding: 0; /* Added from second body rule */
+    box-sizing: border-box; /* Added from second body rule */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    position: static; /* Ensure static positioning */
+
+    /* Set background for the entire page */
+    background-image: url('image/Close-up-photo-of-old-parchment-paper-sheet-with-old-background-or-old-texture-400.webp');
+    background-size: cover; /* Cover the entire viewport */
+    background-repeat: no-repeat; /* Do not repeat */
+    background-position: center center; /* Center the image */
+    background-attachment: fixed; /* Keep background fixed during scroll */
+}
+
+#persian-keyboard {
+    display: grid;
+    /* 8 columns, each 60px wide */
+    grid-template-columns: repeat(8, 60px); 
+    /* 10px gap between rows, 15px gap between columns */
+    gap: 10px 15px; 
+    width: fit-content; /* Calculate width based on content */
+    padding: 15px;
+    background-color: #e0e0e0; /* Reinstated background color */
+    border: 1px solid #b0b0b0;
+    border-radius: 5px;
+
+    /* Removed background image properties */
+    /* background-image: url('image/Free-Torn-Paper-Clip-Art-Telephoto-1000.webp'); */
+    /* background-size: cover; */
+    /* background-repeat: no-repeat; */
+    /* background-position: center center; */
+
+    /* Fixed positioning - adjusted to be above score bar */
+    position: fixed;
+    bottom: 45px; /* Set position in pixels above the score bar */
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+
+    direction: rtl; /* Right-to-left layout for keys */
+}
+
+.keyboard-key {
+    /* Width is controlled by grid-template-columns */
+    padding: 10px 8px; /* Adjusted padding */
+    font-size: 1.8em; /* Increased font size */
+    text-align: center;
+    /* background-color: #ffffff; */ /* Original background */
+    background-color: #e0f2f7; /* Light blue background */
+    border: 1px solid #a0a0a0;
+    border-radius: 4px;
+    color: black; /* Black text color */
+    font-weight: bold; /* Bolder font */
+    font-family: 'Noto Naskh Arabic', 'Tahoma', sans-serif; /* Persian fonts */
+    cursor: pointer;
+    /* box-shadow: 0 2px 2px rgba(0,0,0,0.1); */ /* Original shadow */
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2); /* Enhanced shadow */
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.keyboard-key:hover {
+    background-color: #b3e5fc; /* Lighter blue on hover */
+}
+
+.keyboard-key:active {
+    background-color: #81d4fa; /* Darker blue on active */
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.15); /* Inset shadow on active */
+}
+
+/* --- Styles for Table Layout --- */
+
+#tables-container {
+    padding-top: 5%;
+    padding-right: 5%; /* 5% distance from the right edge */
+    padding-left: 1%; /* Add some left padding for better spacing */
+    display: flex;
+    flex-direction: column;
+    gap: 8vh; /* 8% vertical gap between table rows (using vh for viewport height percentage) */
+    /* Removed width calc as it might conflict with keyboard */
+    /* Ensure container doesn't overlap fixed keyboard */
+    padding-bottom: 50vh; /* Increased padding at the bottom further */
+}
+
+.table-row-container {
+    display: flex;
+    align-items: stretch; /* Make items stretch to the same height */
+    gap: 20px; /* Gap between pseudo-table and side-controls */
+    width: 100%;
+}
+
+.pseudo-table {
+    display: flex;
+    flex-grow: 1; /* Allow table part to take available space */
+    flex-wrap: nowrap; /* Ensure cells stay in one line */
+}
+
+.table-cell {
+    width: 6%;
+    aspect-ratio: 1 / 1; /* Make it square */
+    background-color: gray;
+    border: 1px solid yellow;
+    border-radius: 12%;
+    margin-left: 2%; /* 2% gap from the element to its right (since RTL) */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.table-cell:first-child {
+    margin-left: 0; /* No margin for the first cell (rightmost in RTL) */
+}
+
+.side-controls {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Gap between buttons and input */
+    flex-shrink: 0; /* Prevent controls from shrinking */
+}
+
+.btn {
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    text-align: center;
+    padding: 10px 0; /* Vertical padding, horizontal handled by width */
+    width: 14vw; /* Using vw for consistency, adjust if needed */
+    box-sizing: border-box;
+    height: 100%; /* Stretch button height */
+    display: flex; /* To center text vertically */
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-confirm {
+    background-color: green;
+}
+
+.btn-reject {
+    background-color: red;
+}
+
+.input-field {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 6vw; /* Using vw for consistency */
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 1em;
+    padding: 10px 5px;
+    height: 100%; /* Stretch input height */
+}
+
+/* Hide spinner buttons on number input */
+.input-field::-webkit-outer-spin-button,
+.input-field::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.input-field[type=number] {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+/* Style for the active row */
+.table-row-container.active-row {
+    /* Example: Add a subtle border or background */
+    outline: 2px solid blue;
+    outline-offset: -2px;
+}
+
+/* Style for the rejected row line */
+.pseudo-table.rejected-row {
+    position: relative; /* Needed for pseudo-element positioning */
+}
+
+.pseudo-table.rejected-row::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 3px; /* Line thickness */
+    background-color: red;
+    transform: translateY(-50%);
+    z-index: 5; /* Ensure line is above cells */
+}
+
+/* --- End Styles for Table Layout --- */ 
+
+/* --- Styles for Stopwatch Timer --- */
+#stopwatch-timer {
+    position: fixed;
+    left: 30px; /* Position from left */
+    top: 30px;  /* Position from top */
+    width: 120px; /* Width of the stopwatch */
+    height: 120px; /* Height of the stopwatch */
+    border: 5px solid #555; /* Outer border */
+    border-radius: 50%; /* Make it circular */
+    background-color: #ddd; /* Default background if gradient fails */
+    /* Conic gradient for wipe effect */
+    /* Starts with blue from 0deg to --progress-angle, then gray */
+    background-image: conic-gradient(#3498db var(--progress-angle), #ddd 0deg); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.3), inset 1px 1px 3px rgba(255,255,255,0.5);
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+#timer-display {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2.5em;
+    color: #333;
+    font-weight: bold;
+}
+
+#start-timer-btn {
+    position: fixed;
+    left: 35px; /* Align roughly with timer */
+    top: 165px; /* Position below timer (120px height + 5px border*2 + 30px top + gap) */
+    width: 110px; /* Slightly narrower than timer */
+    padding: 8px 10px;
+    font-size: 1em;
+    cursor: pointer;
+    z-index: 999; /* Below timer overlay */
+    border: 2px solid #555;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+}
+
+/* Add back disabled styles for timer button */
+#start-timer-btn:disabled {
+   cursor: not-allowed;
+   opacity: 0.6;
+}
+
+/* --- End Styles for Stopwatch Timer --- */ 
+
+/* --- Styles for Total Score Display --- */
+#total-score-display {
+    /* Positioning */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px; /* Fixed height for the bar */
+    z-index: 950; /* Below keyboard (1000) but above page */
+    display: none; /* Hidden by default */
+
+    /* Appearance */
+    background-color: #2E7D32; /* Darker green */
+    color: white;
+    font-size: 1.5em; /* Adjusted font size */
+    font-weight: bold;
+    text-align: center;
+    line-height: 40px; /* Vertically center text */
+    border-top: 2px solid #1B5E20; /* Darker border on top */
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.2); /* Shadow */
+
+    /* Remove margin/padding that might interfere */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* --- End Styles for Total Score Display --- */ 
